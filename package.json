@@ -1,0 +1,24 @@
+{
+  "name": "yes-bank-microfontend",
+  "description": "Yes bank microfontend",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "preinstall": "npm install --ignore-scripts",
+    "start": "concurrently \"npm run start:home\" \"npm run start:transaction\"",
+    "start:home": "cd home && npm run dev",
+    "start:transaction": "cd transaction && npm run dev",
+    "build": "concurrently \"npm run build:home\" \"npm run build:transaction\"",
+    "build:home": "cd home && npm run build",
+    "build:transaction": "cd transaction && npm run build",
+    "serve": "npm run start"
+  },
+  "dependencies": {
+    "@module-federation/nextjs-mf": "^8.7.8",
+    "concurrently": "^8.2.2",
+    "wait-on": "7.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "next": "^14.1.4"
+  }
+}
