@@ -1,9 +1,10 @@
 # Configuração necessária para executar o microfrontend.
 
+
 ## 1 - Clonar o reposítório:
 * git clone https://github.com/eloi-goncalves/yes-bank-microfrontend.git
 
-## 2 - Entrar na pasta dos sub-projeto `home` e executar o comando `npm install && npm start`
+## 2 - Entrar na pasta dos sub-projeto `home` e executar o comando `npm install && npm start` - ou executar o comando 'npm run serve' na rais do projeto a primeira vez.
 
 ## 3 - Entrar na pasta dos sub-projeto `transaction` e executar o comando `npm install && npm start`
 

@@ -72,3 +72,15 @@ debug.log
 # Example: Next.js-based configurations could involve monorepo or workspace tools, such as:
 # /node_modules/ (for each subproject in a monorepo setup)
 # or /packages/
+
+# Ignore database file
+database.db
+
+# Or if it's in a specific folder
+# data/database.db
+
+# Ignore all .db files in the project
+*.db
+
+# Ignore uploads folder inside public directory
+/public/uploads/

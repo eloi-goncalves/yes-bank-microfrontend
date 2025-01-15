@@ -149,6 +149,7 @@ function ContainerType(typeBox, className) {
                             className="text-field"
                             placeholder="Insira o nome do destinatário"
                             value={description}
+                            urlUpload="http://localhost:3000/api/upload"
                             onChange={onChangeFile} />
 
                         <TextField

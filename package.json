@@ -9,7 +9,7 @@
     "start:home": "cd home && npm run dev",
     "start:transaction": "cd transaction && npm run dev",
     "start:statement": "cd statement && npm run dev",
-    "start:all": "concurrently \"npm ci --prefix home\" \"npm ci --prefix transaction\" \"npm ci --prefix statement\" && concurrently \"npm run start:home\" \"npm run start:transaction\" \"npm run start:statement\"",
+    "start:all": "concurrently \"npm install --prefix home\" \"npm install --prefix transaction\" \"npm install --prefix statement\" && concurrently \"npm run start:home\" \"npm run start:transaction\" \"npm run start:statement\"",
     "build": "concurrently \"npm run build:statement\" \"npm run build:transaction\" \"npm run build:home\"",
     "build:home": "cd home && npm run build",
     "build:transaction": "cd transaction && npm run build",
