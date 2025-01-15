@@ -33,7 +33,7 @@ class MyDocument extends Document {
           <FlushedChunks chunks={this.props.chunks} />
         </Head>
 
-        <body className='main-layout'>
+        <body className="bg-background-grey">
           <Main />
           <NextScript />
         </body>

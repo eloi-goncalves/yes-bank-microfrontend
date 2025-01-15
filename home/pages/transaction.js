@@ -1,12 +1,13 @@
 import React from "react";
-import dynamic from "next/dynamic";
+import { TransactionComponent } from '../components/transaction/TransactionComponent';
+import ErrorBoundary from "../components/fallback/ErrorBoundary";
 
-const TransactionPage = dynamic(() => import("transaction/TransactionPage"), {
-  ssr: false,
-});
-
-const Transaction = () => {
-  return <TransactionPage />;
+const TransactionPage = () => {
+  return (
+    <ErrorBoundary>
+      <TransactionComponent />
+    </ErrorBoundary>
+  );
 }
 
-export default Transaction;
+export default TransactionPage;

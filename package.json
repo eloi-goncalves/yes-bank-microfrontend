@@ -5,20 +5,23 @@
   "version": "0.0.1",
   "scripts": {
     "preinstall": "npm install --ignore-scripts",
-    "start": "concurrently \"npm run start:home\" \"npm run start:transaction\"",
+    "start": "concurrently \"npm run start:statement\" \"npm run start:transaction\" \"npm run start:home\"",
     "start:home": "cd home && npm run dev",
     "start:transaction": "cd transaction && npm run dev",
-    "build": "concurrently \"npm run build:home\" \"npm run build:transaction\"",
+    "start:statement": "cd statement && npm run dev",
+    "start:all": "concurrently \"npm ci --prefix home\" \"npm ci --prefix transaction\" \"npm ci --prefix statement\" && concurrently \"npm run start:home\" \"npm run start:transaction\" \"npm run start:statement\"",
+    "build": "concurrently \"npm run build:statement\" \"npm run build:transaction\" \"npm run build:home\"",
     "build:home": "cd home && npm run build",
     "build:transaction": "cd transaction && npm run build",
-    "serve": "npm run start"
+    "build:statement": "cd statement && npm run build",
+    "serve": "npm run start:all"
   },
   "dependencies": {
     "@module-federation/nextjs-mf": "^8.7.8",
     "concurrently": "^8.2.2",
-    "wait-on": "7.2.0",
+    "next": "^14.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "next": "^14.1.4"
+    "wait-on": "7.2.0"
   }
 }

@@ -1,11 +1,11 @@
 import App from 'next/app';
 
-function TransactionApp({ Component, pageProps }) {
+function StatementApp({ Component, pageProps }) {
   return ( <Component {...pageProps} /> );
 }
 
-TransactionApp.getInitialProps = async ctx => {
+StatementApp.getInitialProps = async ctx => {
   const appProps = await App.getInitialProps(ctx);
   return appProps;
 };
-export default TransactionApp;
+export default StatementApp;

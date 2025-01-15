@@ -1,17 +1,12 @@
-import React, { Fragment, Suspense, lazy } from 'react';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
-import { HelloWorld } from '../components/helloWorld';
-typeof window !== 'undefined' && console.log(window.checkout);
+import React from 'react';
+import HomePageComponent from '../components/home-page/HomePageComponent';
 
-const Home = ({ loaded }) => {
+const Home = () => {
   return (
-    <div>
-      <HelloWorld />
-    </div>
+    <HomePageComponent />
   );
 };
-//
+
 Home.getInitialProps = async ctx => {
   return {};
 };

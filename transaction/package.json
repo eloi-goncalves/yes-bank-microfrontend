@@ -1,5 +1,5 @@
 {
-  "name": "shop",
+  "name": "transaction",
   "version": "0.1.0",
   "scripts": {
     "dev": "set NEXT_PRIVATE_LOCAL_WEBPACK=true && rm -rf .next && next dev -p 3001",
@@ -8,10 +8,15 @@
   },
   "dependencies": {
     "@module-federation/nextjs-mf": "8.7.8",
+    "better-sqlite3": "^11.7.2",
+    "cors": "^2.8.5",
+    "fs": "^0.0.1-security",
     "lodash": "4.17.21",
     "next": "^14.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "webpack": "5.96.1"
   }
 }

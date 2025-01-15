@@ -9,13 +9,14 @@ const remotes = isServer => {
 };
 module.exports = {
   webpack(config, options) {
+    config.externals = ['better-sqlite3', ...config.externals];
     config.plugins.push(
       new NextFederationPlugin({
         name: 'transaction',
         filename: 'static/chunks/remoteEntry.js',
-        // dts: false,
         exposes: {
-          './TransactionPage': './components/TransactionPage.js',
+          './TransactionComponent': './components/TransactionComponent.js',
+          './TransactionAPI': './services/transaction.js',  
         },
         remotes: remotes(options.isServer),
         shared: ['react', 'react-dom', 'next'],

@@ -1,0 +1,35 @@
+.home {
+  display: grid;
+  grid-template-rows: 17% 81%;
+  gap: 3%;
+  height:100%;
+  width: 100%;
+}
+
+.header-components {
+  display: grid;
+  grid-template-columns: 71% 28%;
+  height:100%;
+  width: 100%;
+  gap: 1%;
+}
+
+.body-components {
+  display: grid;
+  grid-template-columns: 19% 51% 28%;
+  gap: 1%;
+}
+
+.body-complete {
+  padding: 1vh;
+  margin: 1%;
+  display: flex;
+  height: 65vh;
+  max-width: max-content;
+  gap: 1%
+}
+
+.border-normal.welcome {
+  display: flex;
+  align-items: center;
+}

@@ -1,14 +1,9 @@
-import ExportredTitle from "../components/exposedTitle";
+import React from 'react';
+import TransactionComponent from "../components/TransactionComponent";
 
 const TransactionPage = () => {
   return (
-    <div>
-      <div>
-        <title>TransactionPage</title>
-      </div>  
-      <h1>transaction</h1>
-      <ExportredTitle />
-    </div>
+    <TransactionComponent />
   );
 }
 

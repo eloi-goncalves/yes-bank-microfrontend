@@ -1,0 +1,89 @@
+.container { 
+  overflow: auto;
+}
+
+/* Estilo da barra de rolagem */
+.container::-webkit-scrollbar {
+  width: 5px; /* Largura da barra de rolagem */
+}
+
+/* Estilo da trilha da barra de rolagem */
+.container::-webkit-scrollbar-track {
+  background: linear-gradient(#181818, #4b4b4b)
+}
+
+/* Estilo da parte deslizante da barra de rolagem */
+.container::-webkit-scrollbar-thumb {
+  background: linear-gradient(#101010, #1c1c1c); /* Cor da parte deslizante */
+}
+
+/* Estilo da parte deslizante quando o mouse está em cima */
+.container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#000000, #141414); /* Cor ao passar o mouse */
+}
+
+.grid-fields{
+  display: grid;
+  grid-template-columns: 31% 31% 31%;
+  gap: 2%;
+  justify-content: center;
+}
+
+.fields-gap {
+  gap: 3%;
+  display: grid;
+  grid-template-rows: 15% 15% 64%;
+  height: 100%;
+}
+
+.nova-transacao {
+  gap: 2%;
+  display: grid;
+  grid-template-rows: 10% 88%;
+}
+
+.extrato {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 3%;
+}
+
+.saldo {
+  font-weight: bold;
+  padding-top: 3%;
+}
+
+.border-gradient-cartao{
+  padding: 2vh;
+  border: 0.5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #0a0a0a;
+  border-image: linear-gradient(to top,#7C7C7C, #111111) 1;
+}
+
+.transaction-gap {
+  display: grid;
+  grid-template-rows: 15% 10%;
+  row-gap: 75%;
+}
+
+@media (max-width: 768px) {
+  .container {
+      overflow-x: auto;
+  }
+}
+
+.extrato-detalhado:hover {
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  margin-top: 8px;
+}
+
+.header-extrato {
+  display: flex;
+  flex-direction: row.633 ;
+}

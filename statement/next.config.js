@@ -1,23 +1,21 @@
 const NextFederationPlugin = require('@module-federation/nextjs-mf');
-
+// this enables you to use import() and the webpack parser
+// loading remotes on demand, not ideal for SSR
 const remotes = isServer => {
   const location = isServer ? 'ssr' : 'chunks';
   return {
-    transaction: `transaction@http://localhost:3001/_next/static/${location}/remoteEntry.js`,
-    statement: `statement@http://localhost:3002/_next/static/${location}/remoteEntry.js`,
+    home: `home@http://localhost:3001/_next/static/${location}/remoteEntry.js`,
   };
 };
 module.exports = {
   webpack(config, options) {
-    config.externals = ['better-sqlite3', ...config.externals];
-    config.experiments = { topLevelAwait: true, asyncWebAssembly: true, layers: true, };
     config.plugins.push(
       new NextFederationPlugin({
-        name: 'home',
+        name: 'statement',
         filename: 'static/chunks/remoteEntry.js',
         // dts: false,
         exposes: {
-          './ContainerComponent': './components/container/ContainerComponent.js',
+          './StatementComponent': './components/StatementComponent.js',
         },
         remotes: remotes(options.isServer),
         shared: ['react', 'react-dom', 'next'],
