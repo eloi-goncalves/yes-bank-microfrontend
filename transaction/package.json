@@ -8,8 +8,11 @@
   },
   "dependencies": {
     "@module-federation/nextjs-mf": "8.7.8",
-    "better-sqlite3": "^11.7.2",
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.0.7",
+    "better-sqlite3": "^11.8.0",
     "cors": "^2.8.5",
+    "formidable": "^3.5.2",
     "fs": "^0.0.1-security",
     "lodash": "4.17.21",
     "next": "^14.1.4",
@@ -17,7 +20,16 @@
     "react-dom": "^18.2.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
+    "typescript": "^5.7.3",
     "webpack": "5.96.1",
-    "yes-bank-microfontend": "file:.."
+    "yes-bank-components": "^1.0.39"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/cors": "^2.8.17",
+    "@types/eslint": "^9.6.1",
+    "@types/formidable": "^3.4.5",
+    "@types/lodash": "^4.17.14",
+    "eslint": "^9.18.0"
   }
 }

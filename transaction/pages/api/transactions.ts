@@ -1,12 +1,28 @@
 import sqlite3 from 'better-sqlite3';
 import _ from 'lodash';
 import Cors from 'cors';
+import { NextApiRequest, NextApiResponse } from 'next';
+
+type Transaction = {
+  id?: number | string;
+  amount?: number; 
+  type?: string; 
+  description?: string, 
+  dateTransaction?: Date | string, 
+  file?: string
+};
+
+interface UpdatedTransaction {
+  amount: number;
+  type: string;
+  description?: string;
+}
 
 // Initialize the SQLite database (synchronously)
 const db = new sqlite3('./database.db', { verbose: console.log });
 
 // Create the transactions table if it doesn't exist
-const initializeDatabase = () => {
+const initializeDatabase = (): void => {
   const stmt = db.prepare(`
     CREATE TABLE IF NOT EXISTS transactions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,37 +46,42 @@ const cors = Cors({
   allowedHeaders: ['Content-Type', 'Authorization'], // Optional: specify headers you expect
 });
 
-export default async function handler(req, res) {
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   // Run CORS middleware
-  await new Promise((resolve, reject) => cors(req, res, (result) => {
+  await new Promise<void>((resolve, reject) => cors(req, res, (result: unknown) => {
     if (result instanceof Error) {
       reject(result);
     } else {
-      resolve(result);
+      resolve();
     }
   }));
 
   try {
     if (req.method === 'GET') {
-      // Get all transactions
-      const transactions = getTransactions();
+      const { id } = req.query;
+      let transactions;
+
+      if (_.isEmpty(id)) {
+        transactions = getTransactions();
+      } else {
+        transactions = getTransactions(id as string);
+      }
+
       return res.status(200).json(transactions);
     }
 
     if (req.method === 'POST') {
-      // Create a new transaction
-      const transaction = req.body; // assuming the body is a JSON object
-      await createTransaction(transaction);
+      const transaction: Transaction = req.body;
+      createTransaction(transaction);
       return res.status(201).json({ message: 'Transaction created' });
     }
 
     if (req.method === 'PUT') {
       // Update an existing transaction
       const { id } = req.query; // assuming the transaction ID is passed in the query
-      const updatedTransaction = req.body; // assuming the body contains the updated transaction data
+      const updatedTransaction: UpdatedTransaction = req.body; // assuming the body contains the updated transaction data
       if (!_.isEmpty(id)) {
-        await updateTransaction(id, updatedTransaction);
+        updateTransaction(id as string, updatedTransaction); // Removed await
         return res.status(200).json({ message: 'Transaction updated' });
       }
       return res.status(400).json({ error: 'Invalid transaction ID' });
@@ -70,7 +91,7 @@ export default async function handler(req, res) {
       // Delete a transaction
       const { id } = req.query; // assuming the transaction ID is passed in the query
       if (!_.isEmpty(id)) {
-        await deleteTransaction(id);
+        deleteTransaction(id as string); // Removed await
         return res.status(200).json({ message: 'Transaction deleted' });
       }
       return res.status(400).json({ error: 'Invalid transaction ID' });
@@ -83,10 +104,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
-
-// Helper functions to interact with the SQLite database
-
-const createTransaction = (transaction) => {
+const createTransaction = (transaction: Transaction): void => {
   const { amount, type, description, dateTransaction, file } = transaction;
   const transactionDate = dateTransaction || new Date().toISOString();
 
@@ -97,20 +115,27 @@ const createTransaction = (transaction) => {
   stmt.run(amount, type, description, transactionDate, file || null);
 };
 
-const getTransactions = () => {
-  const stmt = db.prepare('SELECT * FROM transactions');
-  return stmt.all();
+const getTransactions = (id?: number | string): Transaction[] => {
+  let stmt;
+  if (id) {
+    stmt = db.prepare('SELECT * FROM transactions WHERE id = ?');
+    return stmt.all(id) as Transaction[];
+  } else {
+    stmt = db.prepare('SELECT * FROM transactions');
+    return stmt.all() as Transaction[];
+  }
 };
 
-const updateTransaction = (id, updatedTransaction) => {
-  const { amount, type, description } = updatedTransaction;
+
+const updateTransaction = (id: number | string, transaction: Transaction): void => {
+  const { amount, type, description } = transaction;
   const stmt = db.prepare(`
     UPDATE transactions SET amount = ?, type = ?, description = ? WHERE id = ?
   `);
   stmt.run(amount, type, description, id);
 };
 
-const deleteTransaction = (id) => {
+const deleteTransaction = (id: number | string): void => {
   const stmt = db.prepare('DELETE FROM transactions WHERE id = ?');
   stmt.run(id);
 };
