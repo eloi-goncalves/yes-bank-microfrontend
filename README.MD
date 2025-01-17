@@ -4,15 +4,7 @@
 ## 1 - Clonar o reposítório:
 * git clone https://github.com/eloi-goncalves/yes-bank-microfrontend.git
 
-## 2 - Entrar na pasta dos sub-projeto `home` e executar o comando `npm install && npm start` - ou executar o comando 'npm run serve' na rais do projeto a primeira vez.
-
-## 3 - Entrar na pasta dos sub-projeto `transaction` e executar o comando `npm install && npm start`
-
-## 4 - Após a execução das duas etapas acima todas as dependências baixas e os projetos executadas uma vez, agora é necessário para os dois projetos.
-
-## 5 - Voltar a raiz do microfrontend e executar os comandos `npm install && npm start`
-
-## 6 - Agora o microfrontend está configurado e executando.
+## 2 - Entrar na pasta raiz do projeto cd yes-bank-microfrontend e executar o comando 'npm run serve' ou executar com o docker: 'docker-compose up --build'
 
 
 # Explicação dos arquivos de configuração: `next.config.js`
