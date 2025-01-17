@@ -1,8 +1,7 @@
 name: publish
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+
 jobs:
   check-application:
     runs-on: ubuntu-latest
@@ -10,13 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # Specify the desired Node.js version for NestJS
+          node-version: '20'
 
-      # Setup Node.js cache
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
@@ -24,36 +21,40 @@ jobs:
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
 
-      # After running tests
+      - run: npm install
+
+      - run: npm run build
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Build Docker image
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: esneves18/yes-bank-app:${{ github.sha }}
+
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get install -y docker-compose
+
+      - name: Run Docker Compose
+        run: |
+          docker-compose -f docker-compose.yml up --build -d
+
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coverage/
 
-      # Install dependencies
-      - run: npm install
-
-      # Run tests
-      # - run: npm run test -- --coverage  # Assuming you're using Jest for testing
-
-      # Build the NestJS application (compiles TypeScript)
-      - run: npm run build
-
-      # Setup QEMU (If Docker is required)
-      - name: Setup QEMU
-        uses: docker/setup-qemu-action@v3
-
-      # Setup Docker Buildx (If Docker is required)
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3  
-
-      # Build and push Docker image (If Docker is needed for your app)
-      # - name: Build and push Docker image
-      #   id: docker_build
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     push: false  # Change to 'true' if you want to push the image to a registry
-      #     tags: eagoncalves/git-actions-nestjs:${{ github.sha }}
-      #     cache-from: type=gha
-      #     cache-to: type=gha,mode=max
+      - name: Push Docker image to Docker Hub
+        if: success() && github.event_name == 'push'
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push esneves18/yes-bank-app:${{ github.sha }}
