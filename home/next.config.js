@@ -15,9 +15,7 @@ module.exports = {
       new NextFederationPlugin({
         name: 'home',
         filename: 'static/chunks/remoteEntry.js',
-        // dts: false,
         exposes: {
-          './ContainerComponent': './components/container/ContainerComponent.js',
         },
         remotes: remotes(options.isServer),
         shared: ['react', 'react-dom', 'next'],

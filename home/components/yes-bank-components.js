@@ -16,6 +16,7 @@ const AttachmentField = dynamic(() => import('yes-bank-components').then((mod) =
 const EmailField = dynamic(() => import('yes-bank-components').then((mod) => mod.EmailField), { ssr: false });
 const Header = dynamic(() => import('yes-bank-components').then((mod) => mod.Header), { ssr: false });
 const Dashboard = dynamic(() => import('yes-bank-components').then((mod) => mod.Dashboard), { ssr: false });
+const ContainerComponent = dynamic(() => import('yes-bank-components').then((mod) => mod.ContainerComponent), { ssr: false });
 
 export {
     Menu,
@@ -34,4 +35,5 @@ export {
     EmailField,
     Header,
     Dashboard,
+    ContainerComponent,
 }

@@ -14,10 +14,10 @@ module.exports = {
       new NextFederationPlugin({
         name: 'transaction',
         filename: 'static/chunks/remoteEntry.js',
-        // exposes: {
-        //   './TransactionComponent': './components/TransactionComponent.tsx',
-        //   './TransactionAPI': './services/transaction.ts',  
-        // },
+        exposes: {
+          './TransactionComponent': './components/TransactionComponent.tsx',
+          './TransactionAPI': './services/transaction.ts',  
+        },
         remotes: remotes(options.isServer),
         shared: ['react', 'react-dom', 'next'],
         extraOptions: {

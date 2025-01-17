@@ -22,7 +22,8 @@
     "sqlite3": "^5.1.7",
     "typescript": "^5.7.3",
     "webpack": "5.96.1",
-    "yes-bank-components": "^1.0.39"
+    "yes-bank-components": "^1.0.46",
+    "yes-bank-microfontend": "file:.."
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.12",

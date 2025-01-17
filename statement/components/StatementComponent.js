@@ -1,8 +1,6 @@
 import dynamic from "next/dynamic";
-
-const ContainerComponent = dynamic(() => import("home/ContainerComponent"), {
-  ssr: false,
-});
+const ContainerComponent = dynamic(() => import('yes-bank-components').then((mod) => mod.ContainerComponent), { ssr: false });
+import { createTransactionAPI, getTransactionsAPI, deleteTransactionsAPI, updateTransactionsAPI } from "transaction/TransactionAPI";
 
 const StatementComponent = () => {
   return (
@@ -17,17 +15,19 @@ const StatementComponent = () => {
       }}
     >
       <ContainerComponent
-        type={"menu"}
+        componentType={"menu"}
         className="border-gradient menu"
+        createTransactionAPI={createTransactionAPI} deleteTransactionsAPI={deleteTransactionsAPI} getTransactionsAPI={getTransactionsAPI} updateTransactionsAPI={updateTransactionsAPI}
         style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       />
       <ContainerComponent
-        type={"extrato-detalhado"}
+        componentType={"extrato-detalhado"}
         className="extrato"
+        createTransactionAPI={createTransactionAPI} deleteTransactionsAPI={deleteTransactionsAPI} getTransactionsAPI={getTransactionsAPI} updateTransactionsAPI={updateTransactionsAPI}
       />
       <div className="saldo-cartao-colum">
-        <ContainerComponent type={"saldo"} className="saldo" />
-        <ContainerComponent type={"cartao"} className="cartao" />
+        <ContainerComponent componentType={"saldo"} className="saldo" createTransactionAPI={createTransactionAPI} deleteTransactionsAPI={deleteTransactionsAPI} getTransactionsAPI={getTransactionsAPI} updateTransactionsAPI={updateTransactionsAPI} />
+        <ContainerComponent componentType={"cartao"} className="cartao" createTransactionAPI={createTransactionAPI} deleteTransactionsAPI={deleteTransactionsAPI} getTransactionsAPI={getTransactionsAPI} updateTransactionsAPI={updateTransactionsAPI} />
       </div>
     </div>
   );

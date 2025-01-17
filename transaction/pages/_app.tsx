@@ -1,4 +1,5 @@
 import App, { AppContext, AppProps } from 'next/app';
+import 'yes-bank-components/dist/styles.css';
 
 function TransactionApp({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />;

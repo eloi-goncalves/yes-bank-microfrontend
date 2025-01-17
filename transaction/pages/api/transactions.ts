@@ -58,14 +58,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     if (req.method === 'GET') {
-      const { id } = req.query;
-      let transactions;
+      const { id, description, type } = req.query;
 
-      if (_.isEmpty(id)) {
-        transactions = getTransactions();
-      } else {
-        transactions = getTransactions(id as string);
-      }
+      const transactions = getTransactions(id as string, description as string, type as string);
 
       return res.status(200).json(transactions);
     }
@@ -115,16 +110,30 @@ const createTransaction = (transaction: Transaction): void => {
   stmt.run(amount, type, description, transactionDate, file || null);
 };
 
-const getTransactions = (id?: number | string): Transaction[] => {
-  let stmt;
+const getTransactions = (id?: number | string, description?: string, type?: string): Transaction[] => {
+  let query = 'SELECT * FROM transactions WHERE 1=1';
+  const params: (string | number)[] = [];
+
   if (id) {
-    stmt = db.prepare('SELECT * FROM transactions WHERE id = ?');
-    return stmt.all(id) as Transaction[];
-  } else {
-    stmt = db.prepare('SELECT * FROM transactions');
-    return stmt.all() as Transaction[];
+    query += ' AND id = ?';
+    params.push(id);
   }
+
+  if (description) {
+    query += ' AND description LIKE ?';
+    params.push(`%${description}%`);
+  }
+
+  if (type) {
+    query += ' AND type = ?';
+    params.push(type);
+  }
+
+  const stmt = db.prepare(query);
+
+  return stmt.all(...params) as Transaction[];
 };
+
 
 
 const updateTransaction = (id: number | string, transaction: Transaction): void => {

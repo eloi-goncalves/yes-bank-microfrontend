@@ -38,23 +38,41 @@ export async function createTransactionAPI(transaction: Transaction): Promise<vo
     }
 }
 
-export async function getTransactionsAPI(id?: number | string): Promise<Transaction[]> {
+export async function getTransactionsAPI({ id, description, type, }: { id?: number | string; description?: string; type?: string; } = {}): Promise<Transaction[]> {
     try {
-        const url = id ? `http://localhost:3001/api/transactions?id=${id}` : 'http://localhost:3001/api/transactions';
+        let url = 'http://localhost:3001/api/transactions';
+        const params: string[] = [];
+
+        if (id) {
+        params.push(`id=${id}`);
+        }
+        if (description) {
+        params.push(`description=${encodeURIComponent(description)}`);
+        }
+        if (type) {
+        params.push(`type=${encodeURIComponent(type)}`);
+        }
+
+        if (params.length > 0) {
+        url += `?${params.join('&')}`;
+        }
+
         const options: RequestInit = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
         };
+
         const result = await fetchJson<Transaction[]>(url, options);
-        console.log(id ? 'Transaction retrieved:' : 'Transactions retrieved:', result);
+        console.log('Transactions retrieved:', result);
         return result;
     } catch (error) {
         console.error('Failed to retrieve transactions:', error);
         return [];
     }
 }
+  
 
 export async function updateTransactionsAPI(id: number | string, transaction: Transaction): Promise<Transaction | undefined> {
     try {
