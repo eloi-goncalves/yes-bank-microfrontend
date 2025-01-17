@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  home:
+    build:
+      context: ./home
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - transaction
+      - statement
+    environment:
+      - NEXT_PUBLIC_API_URL=http://transaction:3001/api
+
+  # transaction:
+  #   build:
+  #     context: ./transaction
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3001:3001"
+  #   networks:
+  #     - app-network
+  #   environment:
+  #     - DB_HOST=localhost
+
+  # statement:
+  #   build:
+  #     context: ./statement
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3002:3002"
+  #   networks:
+  #     - app-network
+  #   environment:
+  #     - NEXT_PUBLIC_API_URL=http://transaction:3001/api
+
+networks:
+  app-network:
+    driver: bridge

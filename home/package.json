@@ -2,7 +2,7 @@
   "name": "home",
   "version": "0.1.0",
   "scripts": {
-    "dev": "set NEXT_PRIVATE_LOCAL_WEBPACK=true && rm -rf .next && next dev -p 3000",
+    "dev": "set NEXT_PRIVATE_LOCAL_WEBPACK=true && rm -rf .next  && node openBrowser.js && next dev -p 3000",
     "build": "set NEXT_PRIVATE_LOCAL_WEBPACK=true next build",
     "start": "set NEXT_PRIVATE_LOCAL_WEBPACK=true NODE_ENV=production next start -p 3000"
   },
@@ -10,6 +10,7 @@
     "@module-federation/nextjs-mf": "8.7.8",
     "@reduxjs/toolkit": "^2.5.0",
     "better-sqlite3": "^11.7.2",
+    "cross-env": "^7.0.3",
     "formidable": "^3.5.2",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
@@ -21,5 +22,8 @@
     "webpack": "5.96.1",
     "yes-bank-components": "^1.0.46",
     "yes-bank-microfontend": "file:.."
+  },
+  "devDependencies": {
+    "open": "^10.1.0"
   }
 }
